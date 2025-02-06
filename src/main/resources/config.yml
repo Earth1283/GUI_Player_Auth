@@ -1,0 +1,10 @@
+# config.yml
+#   _____           _   _     _ ____  ___ _____
+#   | ____|__ _ _ __| |_| |__ / |___ \( _ )___ /
+#   |  _| / _` | '__| __| '_ \| | __) / _ \ |_ \
+#   | |__| (_| | |  | |_| | | | |/ __/ (_) |__) |
+#   |_____\__,_|_|   \__|_| |_|_|_____\___/____/
+
+# Here is where the configuration files are stored
+
+  pin_length: 4  # Adjust max PIN length here. It is not recommended that you set this to anything below 3

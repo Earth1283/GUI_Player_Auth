@@ -1,0 +1,9 @@
+name: GUIPlayerAuth
+version: 1.0
+main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
+author: Earth1283
+api-version: 1.21
+commands:
+  resetpin:
+    description: Reset your PIN and re-register (useful when your account was hacked).
+    usage: /resetpin
