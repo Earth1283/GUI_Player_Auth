@@ -30,15 +30,22 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
     private final Map<Player, List<Integer>> pinInputs = new HashMap<>();
     private final Set<Player> unauthenticatedPlayers = new HashSet<>();
     private final Map<Player, BukkitRunnable> kickTimers = new HashMap<>();
+    private int autoKickTime;  // Auto-kick time (seconds)
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();  // Ensure the config is loaded
         createDatabase();
         Bukkit.getPluginManager().registerEvents(this, this);
-        saveDefaultConfig();
 
         // Register /resetpin command
         getCommand("resetpin").setExecutor(this);
+
+        // Register /adminreset command
+        getCommand("adminreset").setExecutor(this);
+
+        // Get auto-kick time from the config
+        autoKickTime = getConfig().getInt("auto_kick_time", 30);  // Default to 30 seconds if not configured
     }
 
     @Override
@@ -91,11 +98,13 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
             createDatabase();
         }
 
+        // Perform database interaction synchronously
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT pin FROM users WHERE username = ?");
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
+            // If player doesn't have a PIN, show the registration GUI
             if (!rs.next()) {
                 openRegisterGUI(player);
             } else {
@@ -107,7 +116,7 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
 
-        // Start the kick timer (30 seconds)
+        // Start the kick timer (auto-kick time from config)
         startKickTimer(player);
     }
 
@@ -116,12 +125,12 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
             @Override
             public void run() {
                 if (unauthenticatedPlayers.contains(player)) {
-                    player.kickPlayer(ChatColor.RED + "You failed to authenticate within 30 seconds.");
+                    player.kickPlayer(ChatColor.RED + "You failed to authenticate within " + autoKickTime + " seconds.");
                     unauthenticatedPlayers.remove(player);
                 }
             }
         };
-        kickTask.runTaskLater(this, 600L); // 600 ticks = 30 seconds
+        kickTask.runTaskLater(this, autoKickTime * 20L); // Convert seconds to ticks (1 second = 20 ticks)
         kickTimers.put(player, kickTask);
     }
 
@@ -290,13 +299,43 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (args.length == 0) {
-                pinInputs.put(player, new ArrayList<>());
-                openRegisterGUI(player);
-                player.sendMessage(ChatColor.YELLOW + "Your PIN has been reset. Please register a new PIN.");
+            // /resetpin for resetting own PIN
+            if (command.getName().equalsIgnoreCase("resetpin")) {
+                if (args.length == 0) {
+                    pinInputs.put(player, new ArrayList<>());
+                    openRegisterGUI(player);
+                    player.sendMessage(ChatColor.YELLOW + "Your PIN has been reset. Please register a new PIN.");
+                    return true;
+                } else {
+                    player.sendMessage(ChatColor.RED + "Usage: /resetpin");
+                }
+            }
+
+            // /adminreset <playerName> to forcibly reset a player's PIN
+            if (command.getName().equalsIgnoreCase("adminreset")) {
+                if (player.hasPermission("guiPlayerAuth.adminreset")) { // Ensure the player has admin permissions
+                    if (args.length == 1) {
+                        String targetPlayerName = args[0];
+                        Player targetPlayer = Bukkit.getPlayer(targetPlayerName);
+
+                        if (targetPlayer != null && targetPlayer.isOnline()) {
+                            // Player is online, reset PIN and force re-registration
+                            resetPlayerPin(targetPlayer);
+                            openRegisterGUI(targetPlayer);
+                            targetPlayer.sendMessage(ChatColor.RED + "Your PIN has been forcibly reset. Please register again.");
+                            player.sendMessage(ChatColor.GREEN + "Player " + targetPlayerName + "'s PIN has been reset.");
+                        } else {
+                            // Player is offline, reset PIN from database
+                            resetPlayerPinOffline(targetPlayerName);
+                            player.sendMessage(ChatColor.GREEN + "Player " + targetPlayerName + "'s PIN has been reset.");
+                        }
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Usage: /adminreset <player name>");
+                    }
+                } else {
+                    player.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+                }
                 return true;
-            } else {
-                player.sendMessage(ChatColor.RED + "Usage: /resetpin");
             }
         }
         return false;
@@ -348,13 +387,5 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
         meta.setDisplayName(ChatColor.BOLD + name);
         item.setItemMeta(meta);
         return item;
-    }
-
-    // Hide inventory of unauthenticated players using ProtocolLib
-    private void hidePlayerInventory(Player player) {
-        // Send a packet to hide the player's inventory from other players
-        // This will prevent their inventory from being visible until they authenticate
-        // Assuming you are using ProtocolLib in the project
-        // Packet handling logic goes here (ProtocolLib specific)
     }
 }

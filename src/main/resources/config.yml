@@ -1,5 +1,5 @@
 # config.yml
-#   _____           _   _     _ ____  ___ _____
+#    _____           _   _     _ ____  ___ _____
 #   | ____|__ _ _ __| |_| |__ / |___ \( _ )___ /
 #   |  _| / _` | '__| __| '_ \| | __) / _ \ |_ \
 #   | |__| (_| | |  | |_| | | | |/ __/ (_) |__) |
@@ -8,8 +8,4 @@
 # Here is where the configuration files are stored
 
 # Time (in seconds) before a player is kicked if they haven't authenticated.
-auto_kick_time: 30
-
-# Whether or not to hide the player's inventory until they are authenticated.
-# Set to true to hide the inventory, false to show the inventory immediately.
-hide_inventory_until_authenticated: true
+auto_kick_time: 60
