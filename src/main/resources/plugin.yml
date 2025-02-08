@@ -2,6 +2,7 @@ name: GUIPlayerAuth
 version: 1.2
 main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
 author: Earth1283
+description: Using PINs to protect your server against attackers trying to steal your account.
 api-version: 1.21
 commands:
   resetpin:
