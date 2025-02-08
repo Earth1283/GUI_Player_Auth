@@ -288,4 +288,12 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
         item.setItemMeta(meta);
         return item;
     }
+
+    // Hide inventory of unauthenticated players using ProtocolLib
+    private void hidePlayerInventory(Player player) {
+        // Send a packet to hide the player's inventory from other players
+        // This will prevent their inventory from being visible until they authenticate
+        // Assuming you are using ProtocolLib in the project
+        // Packet handling logic goes here (ProtocolLib specific)
+    }
 }
