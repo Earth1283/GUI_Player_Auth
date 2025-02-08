@@ -6,5 +6,17 @@ description: Using PINs to protect your server against attackers trying to steal
 api-version: 1.21
 commands:
   resetpin:
-    description: Reset your PIN and re-register (useful when your account was hacked).
-    usage: /resetpin
+    description: Resets the player's PIN and forces them to re-register.
+    usage: /<command>
+
+  adminreset:
+    description: Resets another player's PIN, allowing them to re-register.
+    usage: /<command> <player name>
+    permission: guiPlayerAuth.adminreset
+    permission-message: You do not have permission to use this command.
+
+permissions:
+  guiPlayerAuth.adminreset:
+    description: Allows the admin to reset a player's PIN and force re-registration.
+    default: op
+
