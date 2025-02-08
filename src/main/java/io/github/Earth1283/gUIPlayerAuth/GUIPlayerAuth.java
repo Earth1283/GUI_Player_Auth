@@ -302,6 +302,30 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
         return false;
     }
 
+    private void resetPlayerPin(Player player) {
+        // Delete PIN from database
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM users WHERE username = ?");
+            stmt.setString(1, player.getName());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            player.sendMessage(ChatColor.RED + "An error occurred while resetting the PIN.");
+            e.printStackTrace();
+        }
+    }
+
+    private void resetPlayerPinOffline(String playerName) {
+        // Delete PIN from database for offline player
+        try {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM users WHERE username = ?");
+            stmt.setString(1, playerName);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            getLogger().severe("Error resetting PIN for offline player " + playerName);
+            e.printStackTrace();
+        }
+    }
+
     private void applyBlindnessEffect(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false, false, false));
     }
