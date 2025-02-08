@@ -249,6 +249,41 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+
+        // If the player is unauthenticated, cancel the command
+        if (unauthenticatedPlayers.contains(player)) {
+            player.sendMessage(ChatColor.RED + "You must authenticate before executing any commands.");
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+
+        // If the player is unauthenticated, cancel the chat message
+        if (unauthenticatedPlayers.contains(player)) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You must authenticate before chatting!");
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+
+            // If the player is unauthenticated, cancel damage
+            if (unauthenticatedPlayers.contains(player)) {
+                event.setCancelled(true);
+                player.sendMessage(ChatColor.RED + "You cannot be damaged before authentication.");
+            }
+        }
+    }
+
     public boolean onCommand(org.bukkit.command.CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
