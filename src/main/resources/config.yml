@@ -8,4 +8,6 @@
 # Here is where the configuration files are stored
 
 # Time (in seconds) before a player is kicked if they haven't authenticated.
-auto_kick_time: 45
+auto_kick_time: 35
+# Note: If your server doesn't have a resource pack, it is recommended that you set this to 30 (or 20)
+# But if it does have one, set it to 45
