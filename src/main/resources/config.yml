@@ -8,4 +8,4 @@
 # Here is where the configuration files are stored
 
 # Time (in seconds) before a player is kicked if they haven't authenticated.
-auto_kick_time: 60
+auto_kick_time: 45
