@@ -1,11 +1,9 @@
 name: GUIPlayerAuth
-version: 1.2
+version: 1.6
 main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
+api-version: 1.19
 author: Earth1283
-description: Using PINs to protect your server against attackers trying to steal your account.
-api-version: 1.21
-author: Earth1283
-description: A simple plugin for player authentication using a PIN system.
+description: A simple plugin for player authentication using a PIN system that keeps password crackers and bots out!
 
 commands:
   resetpin:

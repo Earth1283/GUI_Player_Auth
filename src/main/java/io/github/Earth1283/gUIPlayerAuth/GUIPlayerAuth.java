@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -55,7 +56,7 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
                 connection.close();
             }
         } catch (SQLException e) {
-            getLogger().warning("Failed to close the database connection.");
+            getLogger().warning("Failed to close the database connection. Your data might not be saved properly");
             e.printStackTrace();
         }
     }
@@ -290,8 +291,18 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
             // If the player is unauthenticated, cancel damage
             if (unauthenticatedPlayers.contains(player)) {
                 event.setCancelled(true);
-                player.sendMessage(ChatColor.RED + "You cannot be damaged before authentication.");
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+
+        // If the player is unauthenticated, cancel movement
+        if (unauthenticatedPlayers.contains(player)) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You cannot move until you authenticate.");
         }
     }
 
@@ -325,7 +336,7 @@ public class GUIPlayerAuth extends JavaPlugin implements Listener {
                             targetPlayer.sendMessage(ChatColor.RED + "Your PIN has been forcibly reset. Please register again.");
                             player.sendMessage(ChatColor.GREEN + "Player " + targetPlayerName + "'s PIN has been reset.");
                         } else {
-                            // Player is offline, reset PIN from database
+                            // Player is offline, reset PIN from database so that they can get a New PIN when they log on
                             resetPlayerPinOffline(targetPlayerName);
                             player.sendMessage(ChatColor.GREEN + "Player " + targetPlayerName + "'s PIN has been reset.");
                         }
