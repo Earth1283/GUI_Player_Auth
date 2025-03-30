@@ -6,8 +6,20 @@
 #   |_____\__,_|_|   \__|_| |_|_|_____\___/____/
 
 # Here is where the configuration files are stored
-
-# Time (in seconds) before a player is kicked if they haven't authenticated.
-auto_kick_time: 35
-# Note: If your server doesn't have a resource pack, it is recommended that you set this to 30 (or 20)
-# But if it does have one, set it to 45
+gui:
+  register-title: Register
+  login-title: Login
+  confirm-pin-item: GREEN_STAINED_GLASS_PANE
+  clear-pin-item: RED_STAINED_GLASS_PANE
+access:
+  restrict-walking: true # Recommended to be set to true
+  restrict-chat: true # Recommended to be set to true
+  restrict-commands:
+    - eco
+    - pay
+    - op
+    - give
+    - kill
+    - clear
+    - help
+    - stop

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GUI_Player_Auth.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GUI_Player_Auth.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/io.github.Earth1283.GUI_Player_Auth.main.iml" filepath="$PROJECT_DIR$/.idea/modules/io.github.Earth1283.GUI_Player_Auth.main.iml" />
     </modules>
   </component>
 </project>

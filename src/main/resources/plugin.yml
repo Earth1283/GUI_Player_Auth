@@ -1,23 +1,15 @@
 name: GUIPlayerAuth
-version: 1.6.1
+version: 2.1
 main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
-api-version: 1.19
+api-version: 1.17
 author: Earth1283
-description: A simple plugin for player authentication using a PIN system that keeps password crackers and bots out!
-
+description: Using a GUI to authenticate players on cracked servers and online mode servers alike!
 commands:
-  resetpin:
-    description: Resets the player's PIN and forces them to re-register.
-    usage: /<command>
-
-  adminreset:
-    description: Resets another player's PIN, allowing them to re-register.
-    usage: /<command> <player name>
-    permission: guiPlayerAuth.adminreset
-    permission-message: You do not have permission to use this command.
-
+  register:
+    description: Opens the registration GUI
+  login:
+    description: Opens the login GUI
 permissions:
-  guiPlayerAuth.adminreset:
-    description: Allows the admin to reset a player's PIN and force re-registration.
-    default: op
-
+  guiplayerauth.use:
+    description: Allows use of the authentication GUI
+    default: true
