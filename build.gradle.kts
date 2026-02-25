@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.Earth1283"
-version = "1.0"
+version = "3.0"
 
 repositories {
     mavenCentral()
@@ -17,6 +17,12 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    
+    // db
+    implementation("com.zaxxer:HikariCP:5.1.0")
+    
+    // Password Hashing
+    implementation("at.favre.lib:bcrypt:0.10.2")
 }
 
 tasks {
@@ -34,7 +40,6 @@ kotlin {
 }
 
 tasks.build {
-    dependsOn("shadowJar")
 }
 
 tasks.processResources {

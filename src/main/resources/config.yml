@@ -1,0 +1,40 @@
+# Database Configuration
+database:
+  type: "SQLITE" # Options: SQLITE, MYSQL
+  sqlite:
+    file: "database.db"
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "playerauth"
+    username: "root"
+    password: "password"
+    use-ssl: false
+
+# Authentication Configuration
+auth:
+  min-pin-length: 4
+  max-pin-length: 12
+  session-timeout-minutes: 60
+  max-attempts: 3
+  
+  # The world and coordinates players are sent to while authenticating
+  temp-spawn:
+    enabled: true
+    world: "world"
+    x: 0.5
+    y: 100.0
+    z: 0.5
+    yaw: 0.0
+    pitch: 0.0
+
+# Messages (Using MiniMessage format)
+messages:
+  prefix: "<dark_gray>[<gold>Auth<dark_gray>] <reset>"
+  kick-unauthenticated: "<red>Please authenticate to play on this server."
+  kick-max-attempts: "<red>You have been kicked for too many failed login attempts."
+  login-success: "<green>Successfully logged in!"
+  register-success: "<green>Successfully registered your PIN! Please remember it."
+  wrong-pin: "<red>Incorrect PIN! Attempts remaining: <attempts>"
+  pin-too-short: "<red>PIN must be at least <min> digits long!"
+  pin-too-long: "<red>PIN cannot be longer than <max> digits!"

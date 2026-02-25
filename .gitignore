@@ -120,3 +120,4 @@ runs/
 
 # Add macOS stuff
 **/.DS_Store
+.vscode/

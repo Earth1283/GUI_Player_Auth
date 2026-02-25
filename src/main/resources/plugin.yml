@@ -1,6 +1,6 @@
-name: GUI-Player-Auth
-version: '1.0'
-main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
+name: GUIPlayerAuth
+version: '${version}'
+main: io.github.earth1283.guiplayerauth.GUIPlayerAuthPlugin
 api-version: '1.21'
-load: STARTUP
-authors: [ Earth1283 ]
+description: A groundbreaking, GUI-based player login system.
+author: Earth1283
