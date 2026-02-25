@@ -1,15 +1,6 @@
-name: GUIPlayerAuth
-version: 2.1
+name: GUI-Player-Auth
+version: '1.0'
 main: io.github.Earth1283.gUIPlayerAuth.GUIPlayerAuth
-api-version: 1.17
-author: Earth1283
-description: Using a GUI to authenticate players on cracked servers and online mode servers alike!
-commands:
-  register:
-    description: Opens the registration GUI
-  login:
-    description: Opens the login GUI
-permissions:
-  guiplayerauth.use:
-    description: Allows use of the authentication GUI
-    default: true
+api-version: '1.21'
+load: STARTUP
+authors: [ Earth1283 ]
